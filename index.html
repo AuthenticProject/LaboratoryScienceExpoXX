@@ -1554,6 +1554,93 @@
     }
 
     /* ---------- Character Selection Screen Styles ---------- */
+    #charSelectScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 101;
+      background: radial-gradient(circle at 50% 30%, #171026 0%, #07030a 100%);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+
+    #charSelectScreen .select-subtitle {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      color: var(--sky);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    #charSelectScreen h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 5vw, 34px);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffe082, #f4c95d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 4px 0 6px;
+      text-align: center;
+      letter-spacing: 1px;
+      padding: 0 20px;
+    }
+
+    #charSelectScreen .select-hint {
+      font-size: 12px;
+      color: #a195b8;
+      line-height: 1.5;
+      text-align: center;
+      margin: 0 0 12px;
+      padding: 0 20px;
+    }
+
+    #charCardsContainer {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      padding: 4px 20px 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      box-sizing: border-box;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+
+    #charDots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 4px 0 12px;
+    }
+
+    #confirmCharBtn {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 40px;
+      background: linear-gradient(135deg, #f4c95d, #e0a925);
+      color: #11091c;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(244, 201, 93, 0.45);
+      transition: all 0.25s;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
     .char-card {
       width: 200px;
       background: rgba(26, 17, 38, 0.75);
@@ -1935,19 +2022,54 @@
       #bootHint { font-size: 11px; margin-top: 16px; }
 
       /* --- Character Selection: horizontal slider --- */
-      .char-card {
-        width: 72vw !important;
-        min-width: 72vw !important;
-        max-width: 280px;
-        padding: 18px 14px !important;
-        flex-shrink: 0 !important;
-        scroll-snap-align: center;
+      #charSelectScreen {
+        padding: 20px 10px;
+        justify-content: flex-start;
+        gap: 8px;
       }
-
-      .char-card h3 { font-size: 15px; }
-      .char-card p { font-size: 12px; line-height: 1.45; }
-
-      .char-preview-canvas { width: 70px; height: 70px; }
+      #charSelectScreen .select-subtitle {
+        font-size: 9px;
+        margin-bottom: 0px;
+      }
+      #charSelectScreen h2 {
+        font-size: 22px;
+        margin: 2px 0;
+      }
+      #charSelectScreen .select-hint {
+        font-size: 11px;
+        margin-bottom: 0px;
+      }
+      #charCardsContainer {
+        padding-left: calc((100vw - 260px) / 2) !important;
+        padding-right: calc((100vw - 260px) / 2) !important;
+        scroll-snap-type: x mandatory !important;
+        gap: 16px !important;
+      }
+      .char-card {
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        padding: 12px 10px !important;
+        scroll-snap-align: center !important;
+        gap: 6px !important;
+      }
+      .char-card h3 {
+        font-size: 14px !important;
+      }
+      .char-card p {
+        font-size: 11px !important;
+      }
+      .char-preview-canvas {
+        width: 60px !important;
+        height: 60px !important;
+      }
+      #charDots {
+        margin: 2px 0 6px;
+      }
+      #confirmCharBtn {
+        font-size: 13px;
+        padding: 10px 24px;
+      }
 
       /* --- Guidebook overlay --- */
       #guidebookBox {
@@ -1966,7 +2088,21 @@
       #dialogueWrap { padding-bottom: 150px; }
       #dialogueCanvas { width: 46px; height: 46px; }
       #dialogueText { font-size: 12px; }
-      .char-card { width: 78vw !important; min-width: 78vw !important; }
+      #charCardsContainer {
+        padding-left: calc((100vw - 220px) / 2) !important;
+        padding-right: calc((100vw - 220px) / 2) !important;
+        gap: 12px !important;
+      }
+      .char-card {
+        width: 220px !important;
+        min-width: 220px !important;
+        max-width: 220px !important;
+        padding: 10px 8px !important;
+      }
+      .char-preview-canvas {
+        width: 50px !important;
+        height: 50px !important;
+      }
     }
   </style>
 </head>
@@ -2085,8 +2221,7 @@
     <div id="finalCard">
       <img id="finalLogoImg" src="logo_complete.jpg"
         style="width: 140px; margin-bottom: 20px; border-radius: 8px; border: 2px solid #d4af37; box-shadow: 0 4px 15px rgba(0,0,0,0.15);" />
-      <h2>Congratulations!<br>Perjalananmu<br>Telah Selesai!</h2>
-      <p id="finalSub" style="font-size:15px; color:#6d522a; margin-bottom:20px; line-height:1.6; font-style:italic;">🌟 Terima kasih telah menjelajahi setiap sudut Baitul Hikmah!<br><br>Selamat menikmati <strong>Laboratory Science Expo XX</strong>.<br><br><em>"Golden Light, Guided Insight"</em></p>
+      <p id="finalSub" style="font-size:15px; color:#6d522a; margin-bottom:20px; line-height:1.6; font-style:italic;">Terima kasih dan selamat menikmati acara</p>
       <div id="finalBtns">
         <button class="finalBtn" id="btnClose" style="margin-top:8px; padding:14px 32px; font-size:14px;">✕ Tutup</button>
       </div>
@@ -2173,27 +2308,17 @@
     <div id="bootHint">WASD / Arrow keys · E or Enter untuk interaksi · Mobile virtual stick supported</div>
   </div>
 
-  <div id="charSelectScreen"
-    style="position: fixed; inset: 0; z-index: 101; background: radial-gradient(circle at 50% 30%, #171026 0%, #07030a 100%); display: none; flex-direction: column; align-items: center; justify-content: flex-start; padding: 24px 0 20px; overflow: hidden;">
-    <div
-      style="font-family: var(--font-ui); font-size: 10px; color: var(--sky); letter-spacing: 2px; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; padding: 0 20px; text-align:center;">
-      ✦ BAITUL HIKMAH SCIENCE LAB ✦</div>
-    <h2
-      style="font-family: var(--font-serif); font-size: clamp(20px, 5vw, 34px); font-weight: 700; background: linear-gradient(135deg, #ffe082, #f4c95d); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 4px 0 6px; text-align: center; letter-spacing: 1px; padding: 0 20px;">
-      CHOOSE YOUR CHARACTER!</h2>
-    <p
-      style="font-size: 12px; color: #a195b8; line-height: 1.5; text-align: center; margin: 0 0 12px; padding: 0 20px;">
-      Pilih karakter · geser ke samping</p>
+  <div id="charSelectScreen">
+    <div class="select-subtitle">✦ BAITUL HIKMAH SCIENCE LAB ✦</div>
+    <h2>CHOOSE YOUR CHARACTER!</h2>
+    <p class="select-hint">Pilih karakter · geser ke samping</p>
 
-    <div id="charCardsContainer"
-      style="display: flex; gap: 16px; width: 100%; padding: 4px 20px 12px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; box-sizing: border-box; align-items: stretch; flex-shrink: 0;">
+    <div id="charCardsContainer">
       <!-- Cards will be populated dynamically via JavaScript -->
     </div>
-    <div id="charDots" style="display:flex; gap:8px; justify-content:center; margin:4px 0 12px;"></div>
+    <div id="charDots"></div>
 
-    <button id="confirmCharBtn"
-      style="font-family: var(--font-ui); font-weight: 700; font-size: 15px; padding: 14px 40px; background: linear-gradient(135deg, #f4c95d, #e0a925); color: #11091c; border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 6px 20px rgba(244, 201, 93, 0.45); transition: all 0.25s; letter-spacing: 0.5px;">PILIH
-      & MULAI PETUALANGAN</button>
+    <button id="confirmCharBtn">PILIH & MULAI PETUALANGAN</button>
   </div>
 
   <div id="introScreen">
@@ -2222,228 +2347,7 @@
       bgmAudio.volume = 0.35;
 
       function drawCharacterAccessories(g, type, dir, scaleVal, animT, isMoving) {
-        g.save();
-        const breathe = isMoving ? 0 : Math.sin(animT * 1.8) * 0.6 * scaleVal;
-        g.translate(0, breathe);
-
-        // Define colors based on character type
-        let turbanColor = '#27ae60';
-        let robeColor = '#2ecc71';
-        let detailColor = '#ffe082';
-
-        if (type === 'bio') {
-          turbanColor = '#2e7d32'; // Forest Green
-          robeColor = '#a5d6a7';   // Pale Green
-          detailColor = '#81c784'; // Soft Green
-        } else if (type === 'astro') {
-          turbanColor = '#1a237e'; // Navy Blue
-          robeColor = '#9fa8da';   // Soft Blue
-          detailColor = '#ffd54f'; // Gold Star
-        } else if (type === 'chem') {
-          turbanColor = '#455a64'; // Steel Gray
-          robeColor = '#cfd8dc';   // White Lab Coat
-          detailColor = '#00e5ff'; // Neon Cyan Flask
-        } else if (type === 'scholar') {
-          turbanColor = '#b78a28'; // Golden Turban
-          robeColor = '#fff8e1';   // Cream Robe
-          detailColor = '#ffe082'; // Gold Border
-        } else if (type === 'robot') {
-          turbanColor = '#006064'; // Deep Teal
-          robeColor = '#b2ebf2';   // Circuit Robe
-          detailColor = '#00e5ff'; // Electric Cyan
-        }
-
-        // Draw Turban/Hat
-        const hY = -15 * scaleVal; // Head center height
-
-        if (dir !== 'up') {
-          // Front/Side View Turban
-          g.fillStyle = turbanColor;
-          g.beginPath();
-          let turbanX = 0;
-          if (dir === 'left') turbanX = -2 * scaleVal;
-          if (dir === 'right') turbanX = 2 * scaleVal;
-
-          // Draw turban dome
-          g.arc(turbanX, hY - 6 * scaleVal, 8 * scaleVal, Math.PI, 0);
-          g.fill();
-
-          // Draw turban folds
-          g.beginPath();
-          g.ellipse(turbanX, hY - 5 * scaleVal, 9 * scaleVal, 4 * scaleVal, 0, 0, Math.PI * 2);
-          g.fill();
-
-          // Turban Jewel/Ornament in center
-          if (dir === 'down') {
-            g.fillStyle = detailColor;
-            g.beginPath();
-            g.arc(0, hY - 7 * scaleVal, 2.5 * scaleVal, 0, Math.PI * 2);
-            g.fill();
-            if (type === 'scholar' || type === 'astro') {
-              g.fillStyle = '#fff';
-              g.beginPath();
-              g.arc(0, hY - 7 * scaleVal, 1.2 * scaleVal, 0, Math.PI * 2);
-              g.fill();
-            }
-          } else {
-            g.fillStyle = detailColor;
-            g.beginPath();
-            g.arc(turbanX * 2.5, hY - 7 * scaleVal, 2 * scaleVal, 0, Math.PI * 2);
-            g.fill();
-          }
-
-          // Special: Chemistry goggles
-          if (type === 'chem') {
-            g.strokeStyle = '#37474f';
-            g.lineWidth = 2 * scaleVal;
-            g.fillStyle = 'rgba(0, 229, 255, 0.65)';
-            const gY = hY - 3 * scaleVal;
-            if (dir === 'down') {
-              g.beginPath();
-              g.arc(-4 * scaleVal, gY, 3.5 * scaleVal, 0, Math.PI * 2);
-              g.arc(4 * scaleVal, gY, 3.5 * scaleVal, 0, Math.PI * 2);
-              g.fill(); g.stroke();
-              g.beginPath(); g.moveTo(-1 * scaleVal, gY); g.lineTo(1 * scaleVal, gY); g.stroke();
-            } else if (dir === 'left') {
-              g.beginPath();
-              g.arc(-4 * scaleVal, gY, 3.5 * scaleVal, 0, Math.PI * 2);
-              g.fill(); g.stroke();
-            } else if (dir === 'right') {
-              g.beginPath();
-              g.arc(4 * scaleVal, gY, 3.5 * scaleVal, 0, Math.PI * 2);
-              g.fill(); g.stroke();
-            }
-          }
-        } else {
-          // Up View Turban (back of head)
-          g.fillStyle = turbanColor;
-          g.beginPath();
-          g.arc(0, hY - 6 * scaleVal, 8 * scaleVal, Math.PI, 0);
-          g.fill();
-          g.beginPath();
-          g.ellipse(0, hY - 5 * scaleVal, 9 * scaleVal, 4 * scaleVal, 0, 0, Math.PI * 2);
-          g.fill();
-        }
-
-        // Draw Robe/Scarf
-        g.fillStyle = robeColor;
-        if (dir === 'down') {
-          g.beginPath();
-          g.moveTo(-7 * scaleVal, -4 * scaleVal);
-          g.lineTo(0, 10 * scaleVal);
-          g.lineTo(7 * scaleVal, -4 * scaleVal);
-          g.lineTo(10 * scaleVal, 12 * scaleVal);
-          g.lineTo(-10 * scaleVal, 12 * scaleVal);
-          g.closePath();
-          g.fill();
-
-          g.fillStyle = detailColor;
-          g.fillRect(-1.5 * scaleVal, 2 * scaleVal, 3 * scaleVal, 6 * scaleVal);
-        } else if (dir === 'left' || dir === 'right') {
-          g.beginPath();
-          const sideSign = dir === 'left' ? -1 : 1;
-          g.moveTo(-5 * sideSign * scaleVal, -4 * scaleVal);
-          g.lineTo(8 * sideSign * scaleVal, 12 * scaleVal);
-          g.lineTo(-8 * sideSign * scaleVal, 12 * scaleVal);
-          g.closePath();
-          g.fill();
-        } else {
-          g.beginPath();
-          g.ellipse(0, 4 * scaleVal, 10 * scaleVal, 10 * scaleVal, 0, 0, Math.PI * 2);
-          g.fill();
-        }
-
-        // Draw Held Items
-        const bobItem = Math.sin(animT * 4) * 1.5 * scaleVal;
-        g.save();
-        g.translate(0, bobItem);
-
-        if (type === 'bio') {
-          g.fillStyle = '#8d6e63';
-          let itemX = 11 * scaleVal;
-          let itemY = 4 * scaleVal;
-          if (dir === 'left') { itemX = -11 * scaleVal; }
-          if (dir === 'up') { itemX = -8 * scaleVal; itemY = -2 * scaleVal; }
-
-          g.beginPath();
-          g.moveTo(itemX - 3 * scaleVal, itemY);
-          g.lineTo(itemX + 3 * scaleVal, itemY);
-          g.lineTo(itemX + 2 * scaleVal, itemY + 4 * scaleVal);
-          g.lineTo(itemX - 2 * scaleVal, itemY + 4 * scaleVal);
-          g.closePath();
-          g.fill();
-
-          g.fillStyle = '#4caf50';
-          g.beginPath();
-          g.ellipse(itemX, itemY - 2 * scaleVal, 2 * scaleVal, 3 * scaleVal, 0.2, 0, Math.PI * 2);
-          g.fill();
-        }
-        else if (type === 'astro') {
-          let itemX = 11 * scaleVal;
-          let itemY = 4 * scaleVal;
-          if (dir === 'left') { itemX = -11 * scaleVal; }
-          if (dir === 'up') { itemX = -8 * scaleVal; itemY = -2 * scaleVal; }
-
-          g.strokeStyle = '#ffe082';
-          g.lineWidth = 1.5 * scaleVal;
-          g.beginPath();
-          g.moveTo(itemX, itemY);
-          g.lineTo(itemX + 3 * scaleVal, itemY + 5 * scaleVal);
-          g.stroke();
-
-          g.strokeStyle = '#ffd54f';
-          g.fillStyle = 'rgba(143, 211, 244, 0.5)';
-          g.beginPath();
-          g.arc(itemX, itemY, 3 * scaleVal, 0, Math.PI * 2);
-          g.fill();
-          g.stroke();
-        }
-        else if (type === 'chem') {
-          let itemX = 11 * scaleVal;
-          let itemY = 4 * scaleVal;
-          if (dir === 'left') { itemX = -11 * scaleVal; }
-          if (dir === 'up') { itemX = -8 * scaleVal; itemY = -2 * scaleVal; }
-
-          g.strokeStyle = '#fff';
-          g.lineWidth = 1 * scaleVal;
-          g.fillStyle = 'rgba(0, 229, 255, 0.7)';
-          g.beginPath();
-          g.arc(itemX, itemY + 2 * scaleVal, 3.5 * scaleVal, 0, Math.PI * 2);
-          g.fill();
-          g.stroke();
-
-          g.fillStyle = '#fff';
-          g.fillRect(itemX - 1 * scaleVal, itemY - 2 * scaleVal, 2 * scaleVal, 3 * scaleVal);
-        }
-        else if (type === 'scholar') {
-          let itemX = 11 * scaleVal;
-          let itemY = 4 * scaleVal;
-          if (dir === 'left') { itemX = -11 * scaleVal; }
-          if (dir === 'up') { itemX = -8 * scaleVal; itemY = -2 * scaleVal; }
-
-          g.fillStyle = '#2e7d32';
-          g.fillRect(itemX - 3 * scaleVal, itemY - 4 * scaleVal, 6 * scaleVal, 8 * scaleVal);
-          g.fillStyle = '#fff';
-          g.fillRect(itemX + 2 * scaleVal, itemY - 3 * scaleVal, 1 * scaleVal, 6 * scaleVal);
-          g.fillStyle = '#ffd54f';
-          g.beginPath();
-          g.arc(itemX - 0.5 * scaleVal, itemY, 1.2 * scaleVal, 0, Math.PI * 2);
-          g.fill();
-        }
-        else if (type === 'robot') {
-          let itemX = 11 * scaleVal;
-          let itemY = 4 * scaleVal;
-          if (dir === 'left') { itemX = -11 * scaleVal; }
-          if (dir === 'up') { itemX = -8 * scaleVal; itemY = -2 * scaleVal; }
-
-          g.fillStyle = '#37474f';
-          g.fillRect(itemX - 3.5 * scaleVal, itemY - 4.5 * scaleVal, 7 * scaleVal, 9 * scaleVal);
-          g.fillStyle = '#00e5ff';
-          g.fillRect(itemX - 2.5 * scaleVal, itemY - 3.5 * scaleVal, 5 * scaleVal, 7 * scaleVal);
-        }
-
-        g.restore();
-        g.restore();
+        // Obsolete: Replaced by the unified 8x8 spritesheet drawing engine in drawOwl()
       }
 
       const EVENT = {
@@ -2458,7 +2362,6 @@
         committee: "Panitia Penyelenggara: Baitul Hikmah Science Club",
         doorPrize: "Telescope kits, microscope sets, lab-coat vouchers, and a grand prize science bundle.",
         guidebookUrl: "#",
-        rsvpMailto: "mailto:committee@example.com?subject=RSVP%20Laboratory%20Science%20Expo",
         achievements: "Baitul Hikmah has hosted 3 previous science expos, welcomed 40+ guest researchers, and inspired over 500 young scientists.",
         vision: "Vision: to become a nurturing ground where curiosity is treated as a sacred spark.\nMission: to connect knowledge, experiment, and wonder in one living space.",
         rundown: "07.30-07.40  Pembacaan Ayat Suci Al-Qur'an (10 menit)\n07.40-08.00  Pembukaan & Sambutan Direktur KMI & Pembukaan Resmi (20 menit)\n08.00-08.05  Penyerahan Cinderamata (5 menit)\n08.05-08.10  Do'a (5 menit)\n08.10-08.35  Inspeksi Stand (25 menit)\n08.45         Masuknya anggota ke dalam BPPM\n08.45-10.15  Pameran Sains (90 menit)\n10.15-10.25  Perfotoan dengan pembimbing (10 menit)\n10.30-11.15  Penertiban BPPM / Tutup (45 menit)",
@@ -2500,6 +2403,7 @@
           visitedZones.add(key);
           showZoneVisitedBadge(z.name);
           if (ctpVisible) updateChairmanTasks();
+          updateHUD();
           saveGame();
         }
         lastZoneKey = key;
@@ -3079,7 +2983,7 @@
         // ---- INVITATION DETAIL ----
         {
           id: 'invitation', x: 600, y: 1350, icon: '✉', title: 'Undangan Resmi LSE XX',
-          text: `UNDANGAN RESMI\n${EVENT.name}\n\nKepada Yth.\nSeluruh Tamu Undangan dan Pengunjung\n\n${EVENT.organizer} dengan bangga mengundang Anda untuk hadir dalam:\n\n📅 ${EVENT.dateText}\n⏰ ${EVENT.timeText}\n📍 ${EVENT.locationText}\n\n"${EVENT.theme}"\n\nDoor Prize Menarik | Stand Sains Interaktif | Lomba Sains\n\nMohon konfirmasi kehadiran Anda.\nKontak: committee@lsexx.id`
+          text: `UNDANGAN RESMI\n${EVENT.name}\n\nKepada Yth.\nSeluruh Tamu Undangan dan Pengunjung\n\n${EVENT.organizer} dengan bangga mengundang Anda untuk hadir dalam:\n\n📅 ${EVENT.dateText}\n⏰ ${EVENT.timeText}\n📍 ${EVENT.locationText}\n\n"${EVENT.theme}"\n\nDoor Prize Menarik | Stand Sains Interaktif | Lomba Sains`
         },
       ];
 
@@ -3412,8 +3316,8 @@
         buildQuestLog(); buildInventory();
         if (ctpVisible) { buildChairmanTaskPanel(); }
 
-        // Final triggers when: all crystals + archive viewed + enough zones explored
-        const allDone = crystalsFound.size >= 4 && archiveViewed && visitedZones.size >= Math.min(8, TOTAL_ZONES);
+        // Final triggers when: all crystals + archive viewed + all zones explored
+        const allDone = crystalsFound.size >= 4 && archiveViewed && visitedZones.size >= TOTAL_ZONES;
         if (allDone && !finalTriggered) { finalTriggered = true; setTimeout(triggerFinalSequence, 600); }
       }
 
@@ -3503,7 +3407,9 @@
             showDialogue('🔒', 'Gerbang Tersegel', 'Kumpulkan keempat kepingan: Noble Character, Sound Body, Broad Knowledge, dan Independent Mind.', { type: 'maingate' });
             return;
           }
-          archiveViewed = true; saveGame();
+          archiveViewed = true;
+          updateHUD();
+          saveGame();
           showDialogue('📜', 'The Secret Archive',
             `FINAL INVITATION\n${EVENT.organizer} warmly invites you to the ${EVENT.name}.\n\nTHANK YOU\nThank you for exploring every corner of this world — your curiosity is exactly the spirit this Expo celebrates.\n\nSUMMARY\n${EVENT.dateText}, ${EVENT.locationText}.\n${EVENT.theme}`, { type: 'archive' });
         } else if (near.kind === 'maingate') {
@@ -3593,20 +3499,39 @@
 
         const cdiv = document.createElement('div');
         cdiv.className = 'questItem' + (crystalsFound.size >= 4 ? ' done' : '');
-        cdiv.innerHTML = `<span class="qi">${crystalsFound.size >= 4 ? '✅' : '⬜'}</span><span>◆ Kumpulkan 4 Kepingan Logo (${crystalsFound.size}/4)</span>`;
+        cdiv.innerHTML = `<span class="qi">${crystalsFound.size >= 4 ? '✅' : '⬜'}</span><strong>◆ Kumpulkan Kepingan Logo (${crystalsFound.size}/4)</strong>`;
         wrap.appendChild(cdiv);
 
         CRYSTALS.forEach(cr => {
           const done = cr.found;
           const div = document.createElement('div');
           div.className = 'questItem' + (done ? ' done' : '');
-          div.innerHTML = `<span class="qi">${done ? '✅' : '⬜'}</span><span style="color:${cr.color};">◆ ${cr.name}</span>`;
+          div.style.paddingLeft = '15px';
+          div.innerHTML = `<span class="qi">${done ? '✅' : '⬜'}</span><span style="color:${cr.color};">◆ Kepingan ${cr.name}</span>`;
+          wrap.appendChild(div);
+        });
+
+        const TOTAL_ZONES = ZONES.length;
+        const allZones = visitedZones.size >= TOTAL_ZONES;
+        const zdiv = document.createElement('div');
+        zdiv.className = 'questItem' + (allZones ? ' done' : '');
+        zdiv.style.marginTop = '12px';
+        zdiv.innerHTML = `<span class="qi">${allZones ? '✅' : '⬜'}</span><strong>🗺️ Eksplorasi Seluruh Area (${visitedZones.size}/${TOTAL_ZONES})</strong>`;
+        wrap.appendChild(zdiv);
+
+        ZONES.forEach(z => {
+          const visited = visitedZones.has(z.key);
+          const div = document.createElement('div');
+          div.className = 'questItem' + (visited ? ' done' : '');
+          div.style.paddingLeft = '15px';
+          div.innerHTML = `<span class="qi">${visited ? '✅' : '⬜'}</span><span>${z.name}</span>`;
           wrap.appendChild(div);
         });
 
         const adiv = document.createElement('div');
         adiv.className = 'questItem' + (archiveViewed ? ' done' : '');
-        adiv.innerHTML = `<span class="qi">${archiveViewed ? '✅' : '⬜'}</span><span>📜 Buka Arsip Rahasia</span>`;
+        adiv.style.marginTop = '12px';
+        adiv.innerHTML = `<span class="qi">${archiveViewed ? '✅' : '⬜'}</span><strong>📜 Buka Arsip Rahasia</strong>`;
         wrap.appendChild(adiv);
       }
 
@@ -3702,6 +3627,7 @@
         document.getElementById('finalOverlay').classList.remove('show');
         document.getElementById('finalOverlay').style.display = 'none';
         document.getElementById('finalCard').classList.remove('show');
+        closeDialogue();
         pausedUI = false;
       });
 
@@ -4107,103 +4033,101 @@
         scaleVal = scaleVal || 1;
         const idleT = opts.idleT != null ? opts.idleT : walkT;
         const moving = !!opts.moving;
-        const blinking = !!opts.blinking;
-        const scarfColor = opts.scarfColor || null;
         const npcId = opts.npcId || null;
+        const speaking = !!opts.speaking;
 
-        if (opts.isPlayer && charImg.complete && charImg.naturalWidth > 0) {
-          drawCastShadow(g, x, y + 16 * scaleVal, 10 * scaleVal);
-          const fw = charImg.naturalWidth / 4; const fh = charImg.naturalHeight / 4;
-          let row = 0; if (dir === 'up') row = 1; else if (dir === 'left') row = 2; else if (dir === 'right') row = 3;
-          let col = 0;
-          if (moving) {
-            const step = Math.floor(walkT * 1.6) % 4;
-            col = [0, 1, 2, 3][step];
+        let charType = 'scholar';
+        if (opts.isPlayer) {
+          charType = opts.playerCharType || playerCharType || 'scholar';
+        } else if (npcId) {
+          const npc = NPCS.find(n => n.id === npcId);
+          if (npc && npc.charOverride) {
+            charType = npc.charOverride;
+          } else {
+            if (npcId === 'n1') charType = 'scholar';
+            else if (npcId === 'n2') charType = 'bio';
+            else if (npcId === 'n3') charType = 'astro';
+            else if (npcId === 'n5') charType = 'chem';
+            else if (npcId === 'n6') charType = 'robot';
+            else if (npcId === 'n4') charType = 'math';
           }
-          const dw = 44 * scaleVal, dh = 44 * (fh / fw) * scaleVal;
-          g.save(); g.translate(x, y);
-          if (!moving) {
-            const breathe = Math.sin(idleT * 1.8) * 0.6 * scaleVal;
-            g.translate(0, breathe);
-          }
-          g.drawImage(charImg, col * fw, row * fh, fw, fh, -dw / 2, -dh / 2 - 12 * scaleVal, dw, dh);
-          g.restore();
-          const charType = opts.playerCharType || playerCharType || 'scholar';
-          drawCharacterAccessories(g, charType, dir, scaleVal, idleT, moving);
+        } else if (opts.playerCharType) {
+          charType = opts.playerCharType;
+        }
+
+        const img = gameSprites[charType];
+        if (!img || !img.complete || img.naturalWidth <= 0) {
+          drawCastShadow(g, x, y + 15 * scaleVal, 10 * scaleVal);
           return;
         }
 
-        const breathe = Math.sin(idleT * 1.8);
-        const bob = moving ? Math.sin(walkT) * 2.6 * scaleVal : breathe * 1.1 * scaleVal;
-        const stretchY = moving ? 1.04 : 1 + breathe * 0.012;
-        const squashX = moving ? 0.97 : 1 - breathe * 0.008;
+        drawCastShadow(g, x, y + 15 * scaleVal, 11 * scaleVal);
 
-        // Shadow
-        drawCastShadow(g, x, y + 17 * scaleVal, 12 * scaleVal);
+        const sw = img.naturalWidth / 8;
+        const sh = img.naturalHeight / 8;
 
-        g.save(); g.translate(x, y + bob); if (dir === 'left') g.scale(-1, 1); g.scale(squashX, stretchY);
+        let row = 0;
+        let isAction = false;
 
-        // Scarf
-        if (scarfColor) {
-          const flow = moving ? Math.sin(walkT * 1.4) * 4 : Math.sin(idleT * 1.1) * 2;
-          g.fillStyle = scarfColor; g.beginPath(); g.moveTo(-3 * scaleVal, -2 * scaleVal);
-          g.quadraticCurveTo(-10 * scaleVal + flow * 0.4, 6 * scaleVal, -7 * scaleVal + flow, 15 * scaleVal + (moving ? Math.sin(walkT) * 2 : 0));
-          g.quadraticCurveTo(-4 * scaleVal + flow * 0.6, 8 * scaleVal, -1 * scaleVal, 0); g.closePath(); g.fill();
+        if (speaking) {
+          isAction = true;
+          if (npcId === 'n1') row = 5;
+          else if (npcId === 'n5') row = 7;
+          else if (npcId === 'n2') row = 6;
+          else if (npcId === 'n6') row = 4;
+          else if (npcId === 'n3') row = 4;
+          else if (npcId === 'n4') row = 6;
+          else if (opts.isPlayer) row = 5;
+          else row = 4;
+        } else if (opts.actionRow != null) {
+          isAction = true;
+          row = opts.actionRow;
         }
 
-        // Legs & Wings
-        g.fillStyle = '#d99a3e';
-        const lL = moving ? Math.max(0, Math.sin(walkT)) * 3.2 * scaleVal : 0;
-        const rL = moving ? Math.max(0, Math.sin(walkT + Math.PI)) * 3.2 * scaleVal : 0;
-        g.fillRect(-6 * scaleVal, (16 * scaleVal) - lL, 4 * scaleVal, 4 * scaleVal); g.fillRect(2 * scaleVal, (16 * scaleVal) - rL, 4 * scaleVal, 4 * scaleVal);
+        if (!isAction) {
+          if (dir === 'up') {
+            row = 3;
+          } else if (dir === 'left' || dir === 'right') {
+            row = 2;
+          } else if (dir === 'downright' || dir === 'downleft' || dir === 'upright' || dir === 'upleft') {
+            row = 1;
+          } else {
+            row = 0;
+          }
+        }
 
-        const wFl = moving ? Math.sin(walkT * 2) * 4 * scaleVal : breathe * 1.6 * scaleVal;
-        g.fillStyle = shade(color, -18); g.beginPath(); g.ellipse(-9 * scaleVal, 8 * scaleVal + wFl, 5 * scaleVal, 8 * scaleVal, 0.3, 0, 7); g.ellipse(9 * scaleVal, 8 * scaleVal - wFl, 5 * scaleVal, 8 * scaleVal, -0.3, 0, 7); g.fill();
-
-        // Coat Body
-        const coatGrad = g.createLinearGradient(-11 * scaleVal, -4 * scaleVal, 11 * scaleVal, 18 * scaleVal);
-        coatGrad.addColorStop(0, '#fbf8f1'); coatGrad.addColorStop(1, '#e0d8c2');
-        g.fillStyle = coatGrad; g.beginPath(); g.ellipse(0, 6 * scaleVal, 11 * scaleVal, 13 * scaleVal, 0, 0, 7); g.fill();
-        g.strokeStyle = '#c9c0a8'; g.lineWidth = 1.5 * scaleVal; g.stroke();
-        g.strokeStyle = 'rgba(0,0,0,0.12)'; g.lineWidth = 1 * scaleVal; g.beginPath(); g.moveTo(0, -4 * scaleVal); g.lineTo(0, 16 * scaleVal); g.stroke();
-
-        // Head & Facial Disc
-        g.fillStyle = color; g.beginPath(); g.arc(0, -8 * scaleVal, 10 * scaleVal, 0, 7); g.fill();
-        g.fillStyle = shade(color, 16); g.beginPath(); g.ellipse(0, -7 * scaleVal, 7.5 * scaleVal, 7 * scaleVal, 0, 0, 7); g.fill();
-
-        // Eyes & Beak
-        const eyeY = -8 * scaleVal;
-        if (blinking) {
-          g.strokeStyle = shade(color, -40); g.lineWidth = 1.4 * scaleVal; g.lineCap = 'round';
-          g.beginPath(); g.moveTo(-7 * scaleVal, eyeY); g.lineTo(-1 * scaleVal, eyeY); g.moveTo(1 * scaleVal, eyeY); g.lineTo(7 * scaleVal, eyeY); g.stroke();
+        let col = 0;
+        if (moving) {
+          col = Math.floor(walkT) % 8;
+        } else if (speaking || (isAction && opts.animateAction)) {
+          col = Math.floor(idleT * 8) % 8;
         } else {
-          g.fillStyle = '#fff'; g.beginPath(); g.arc(-4 * scaleVal, eyeY, 4 * scaleVal, 0, 7); g.arc(4 * scaleVal, eyeY, 4 * scaleVal, 0, 7); g.fill();
-          g.fillStyle = '#1b1425'; g.beginPath(); g.arc(-4 * scaleVal, eyeY, 1.8 * scaleVal, 0, 7); g.arc(4 * scaleVal, eyeY, 1.8 * scaleVal, 0, 7); g.fill();
-        }
-        g.fillStyle = '#f0866b'; g.beginPath(); g.moveTo(0, -5 * scaleVal); g.lineTo(-3 * scaleVal, -2 * scaleVal); g.lineTo(3 * scaleVal, -2 * scaleVal); g.fill();
-
-        /* NPC Accessories Overlay */
-        if (npcId === 'n1') { // Prof Academic Cap & Pointer
-          g.fillStyle = '#1e1425'; g.beginPath(); g.moveTo(-9 * scaleVal, -18 * scaleVal); g.lineTo(0, -21 * scaleVal); g.lineTo(9 * scaleVal, -18 * scaleVal); g.lineTo(0, -15 * scaleVal); g.closePath(); g.fill();
-          g.fillStyle = '#8e5a2b'; g.fillRect(7 * scaleVal, 2 * scaleVal, 2 * scaleVal, 14 * scaleVal);
-        } else if (npcId === 'n2') { // Assistant Bowtie
-          g.fillStyle = '#e74c3c'; g.beginPath(); g.arc(0, 9 * scaleVal, 2.5 * scaleVal, 0, 7); g.fill();
-        } else if (npcId === 'n3') { // Wise Cloak & Staff
-          g.fillStyle = '#2c3e50'; g.beginPath(); g.arc(0, -7 * scaleVal, 11.5 * scaleVal, Math.PI, 0); g.fill();
-          g.strokeStyle = '#5a3d22'; g.lineWidth = 1.8 * scaleVal; g.beginPath(); g.moveTo(8 * scaleVal, -15 * scaleVal); g.lineTo(8 * scaleVal, 16 * scaleVal); g.stroke();
-        } else if (npcId === 'n4') { // Librarian Shawl
-          g.fillStyle = '#e74c3c'; g.beginPath(); g.ellipse(0, 10 * scaleVal, 11 * scaleVal, 4 * scaleVal, 0, 0, 7); g.fill();
-        } else if (npcId === 'n5') { // Research Flask
-          g.fillStyle = '#27ae60'; g.beginPath(); g.arc(9 * scaleVal, 11 * scaleVal, 3.5 * scaleVal, 0, 7); g.fill();
-        } else if (npcId === 'n6') { // Security Vest & Cap
-          g.fillStyle = '#2c3e50'; g.fillRect(-7 * scaleVal, -17 * scaleVal, 14 * scaleVal, 3 * scaleVal);
-          g.fillStyle = '#2980b9'; g.beginPath(); g.ellipse(0, 7 * scaleVal, 11.2 * scaleVal, 11 * scaleVal, 0, 0, 7); g.fill();
+          col = 0;
         }
 
-        if (opts.isPlayer) {
-          const charType = opts.playerCharType || playerCharType || 'scholar';
-          drawCharacterAccessories(g, charType, dir, scaleVal, idleT, moving);
+        g.save();
+        g.translate(x, y);
+
+        let flip = false;
+        if (row === 2 && dir === 'left') {
+          flip = true;
+        } else if (row === 1 && (dir === 'downleft' || dir === 'upleft')) {
+          flip = true;
         }
+
+        if (flip) {
+          g.scale(-1, 1);
+        }
+
+        const dw = 44 * scaleVal;
+        const dh = 44 * (sh / sw) * scaleVal;
+
+        g.drawImage(
+          img,
+          col * sw, row * sh, sw, sh,
+          -dw / 2, -dh / 2 - 12 * scaleVal,
+          dw, dh
+        );
 
         g.restore();
       }
@@ -5434,20 +5358,42 @@
       });
 
       function assignNPCCharacters() {
-        // Assign unselected chars as NPC overrides
         const unselected = CHARACTERS.filter(c => c.id !== playerCharType);
+        
+        // Define mapping targets
+        const targets = [
+          { npcId: 'n1', roleName: 'Professor Owl' },
+          { npcId: 'n5', roleName: 'Research Owl' },
+          { npcId: 'n2', roleName: 'Assistant Owl' },
+          { npcId: 'n6', roleName: 'Security Owl' },
+          { npcId: 'n3', roleName: 'General NPC' }
+        ];
+
+        // Reset overrides first
+        NPCS.forEach(n => {
+          delete n.charOverride;
+          if (n.id === 'n1') n.name = 'Professor Owl';
+          if (n.id === 'n2') n.name = 'Assistant Owl';
+          if (n.id === 'n3') { n.name = 'Wise Owl'; n.state = 'idle'; }
+          if (n.id === 'n4') n.name = 'Librarian Owl';
+          if (n.id === 'n5') n.name = 'Research Owl';
+          if (n.id === 'n6') n.name = 'Security Owl';
+        });
+
+        // Apply new overrides
         unselected.forEach((char, idx) => {
-          const npcId = NPC_ROLES[idx];
-          const npc = NPCS.find(n => n.id === npcId);
-          if (npc) {
-            npc.charOverride = char.id;
-            npc.name = char.name;
+          if (idx < targets.length) {
+            const target = targets[idx];
+            const npc = NPCS.find(n => n.id === target.npcId);
+            if (npc) {
+              npc.charOverride = char.id;
+              npc.name = char.name;
+              if (target.npcId === 'n3') {
+                npc.state = 'patrol'; // Ensure it wanders around the campus
+              }
+            }
           }
         });
-        // The selected char becomes the player — clear any override on remaining NPC slot
-        const lastNpcId = NPC_ROLES[unselected.length];
-        const lastNpc = NPCS.find(n => n.id === lastNpcId);
-        if (lastNpc) delete lastNpc.charOverride;
       }
 
       let charSelectActive = false;
@@ -5461,14 +5407,11 @@
         const container = document.getElementById('charCardsContainer');
         container.innerHTML = '';
 
-        const isMobile = window.innerWidth < 720;
-        const cardW = isMobile ? Math.min(window.innerWidth * 0.72, 220) : 200;
-
         CHARACTERS.forEach(char => {
           const card = document.createElement('div');
           card.className = `char-card char-card-${char.id}` + (char.id === playerCharType ? ' selected' : '');
           card.dataset.id = char.id;
-          card.style.cssText = `scroll-snap-align: center; flex-shrink: 0; width: ${cardW}px; min-width: ${cardW}px;`;
+          card.style.cssText = `scroll-snap-align: center; flex-shrink: 0;`;
 
           card.innerHTML = `
       <canvas class="char-preview-canvas" id="canvas-select-${char.id}" width="80" height="80"></canvas>
@@ -5483,6 +5426,7 @@
             updateCharDots();
             ensureAudio();
             sfxInteract();
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           });
 
           container.appendChild(card);
